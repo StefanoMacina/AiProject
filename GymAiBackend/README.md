@@ -7,3 +7,4 @@
 * run new container from this image
   docker run --rm -it -v $(pwd):/app -p 8080:8080 kishieel/spring-hot-reloading
 
+sono stefano
