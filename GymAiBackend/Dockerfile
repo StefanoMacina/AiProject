@@ -30,3 +30,19 @@ RUN apk add inotify-tools
 RUN chmod +x /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
+
+
+# Utilizza l'immagine JDK come base
+#FROM openjdk:17-jdk-alpine
+#
+## Imposta la directory di lavoro all'interno del container
+#WORKDIR /app
+#
+## Copia il file JAR dell'applicazione nella directory di lavoro
+#COPY target/app.jar .
+#
+## Espone la porta 8080
+#EXPOSE 8080
+#
+## Comando per eseguire l'applicazione
+#ENTRYPOINT ["java", "-jar", "app.jar"]
