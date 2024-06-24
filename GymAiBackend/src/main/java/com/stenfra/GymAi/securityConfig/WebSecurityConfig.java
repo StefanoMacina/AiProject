@@ -1,4 +1,4 @@
-package com.stenfra.GymAi.security;
+package com.stenfra.GymAi.securityConfig;
 
 import com.stenfra.GymAi.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,39 +25,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig {
 
     @Autowired
-    UserRepository userRepository;
-
-    @Autowired
     AuthenticationProvider authenticationProvider;
 
     @Autowired
     JwtAuthFilter jwtAuthFilter;
 
-    @Bean
-    UserDetailsService userDetailsService() {
-        return username -> userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-    }
-
-    @Bean
-    BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
-    }
-
-    @Bean
-    AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-
-        authProvider.setUserDetailsService(userDetailsService());
-        authProvider.setPasswordEncoder(passwordEncoder());
-
-        return authProvider;
-    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(
@@ -67,7 +39,7 @@ public class WebSecurityConfig {
         http.authorizeHttpRequests( auth -> auth.requestMatchers("/api/v1/auth/**")
                 .permitAll()
                 .anyRequest()
-                .authenticated());
+                .permitAll());
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.authenticationProvider(authenticationProvider);
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

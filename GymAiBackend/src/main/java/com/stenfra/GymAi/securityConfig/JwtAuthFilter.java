@@ -1,4 +1,4 @@
-package com.stenfra.GymAi.security;
+package com.stenfra.GymAi.securityConfig;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

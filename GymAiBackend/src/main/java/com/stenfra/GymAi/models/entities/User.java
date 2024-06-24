@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,7 +24,7 @@ import java.util.UUID;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     private String firstname, lastname, email, username;
@@ -86,7 +85,3 @@ public class User implements UserDetails {
     }
 }
 
-enum Role{
-    ROLE_ADMIN,
-    ROLE_USER
-}
