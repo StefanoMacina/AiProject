@@ -42,15 +42,14 @@ public class AuthService {
     JwtService jwtService;
 
     public void signUp(RegisterRequest registerRequest) throws UserAlreadyExistsEx {
-        User user = User.builder()
-                .firstname(registerRequest.getFirstname())
-                .lastname(registerRequest.getLastname())
-                .username(registerRequest.getUsername())
-                .birthdate(registerRequest.getBirthdate())
-                .email(registerRequest.getEmail())
-                .passwd(encoder.encode(registerRequest.getPassword()))
-                .role(registerRequest.getRole())
-                .build();
+        User user = new User(
+                registerRequest.getFirstname(),
+                registerRequest.getLastname(),
+                registerRequest.getEmail(),
+                registerRequest.getBirthdate(),
+                encoder.encode(registerRequest.getPassword()),
+                registerRequest.getRole()
+        );
 
         if(userRepository.existsByUsername(user.getUsername())){
             throw new UserAlreadyExistsEx("username %s already exists".formatted(user.getUsername()));
