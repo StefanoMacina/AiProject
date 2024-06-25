@@ -28,37 +28,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<MessageResponse> handleUserAlreadyExistException(UserAlreadyExistsEx ex){
         return new ResponseEntity<>(new MessageResponse(ex.getMessage()),HttpStatus.CONFLICT);
     }
-
-//    @ExceptionHandler(MethodArgumentNotValidException.class)
-//    public ResponseEntity<Map<String, List<String>>> handleValidationErrors(MethodArgumentNotValidException ex) {
-//        List<String> errors = ex.getBindingResult().getFieldErrors()
-//                .stream().map(FieldError::getField).collect(Collectors.toList());
-//        return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.BAD_REQUEST);
-//    }
-//
-//
-//    private Map<String, List<String>> getErrorsMap(List<String> errors) {
-//        Map<String, List<String>> errorResponse = new HashMap<>();
-//        errorResponse.put("errors", errors);
-//        return errorResponse;
-//    }
-//
-//    @ExceptionHandler(UserAlreadyExistsEx.class)
-//    public ResponseEntity<Map<String, List<String>>> handleNotFoundException(UserAlreadyExistsEx ex) {
-//        List<String> errors = Collections.singletonList(ex.getMessage());
-//        return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.NOT_FOUND);
-//    }
-//
-//    @ExceptionHandler(Exception.class)
-//    public final ResponseEntity<Map<String, List<String>>> handleGeneralExceptions(Exception ex) {
-//        List<String> errors = Collections.singletonList(ex.getMessage());
-//        return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
-//
-//    @ExceptionHandler(RuntimeException.class)
-//    public final ResponseEntity<Map<String, List<String>>> handleRuntimeExceptions(RuntimeException ex) {
-//        List<String> errors = Collections.singletonList(ex.getMessage());
-//        return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
-
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleInvalidArgument(MethodArgumentNotValidException ex) {
+        Map<String, String> errorMap = new HashMap<>();
+        ex.getBindingResult().getFieldErrors().forEach(error -> {
+            errorMap.put(error.getField(), error.getDefaultMessage());
+        });
+        return errorMap;
+    }
 }

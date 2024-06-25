@@ -39,7 +39,7 @@ public class AuthUserController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> register(
-            @Valid @RequestBody RegisterRequest registerRequest, BindingResult bindingResult
+             @RequestBody @Valid RegisterRequest registerRequest
     ) throws UserAlreadyExistsEx {
 
         authService.signUp(registerRequest);
