@@ -8,7 +8,12 @@
     <ion-input label="username" formControlName="username" label-placement="floating" fill="outline" placeholder=""></ion-input>
     <ion-input label="email" formControlName="email" label-placement="floating" fill="outline" placeholder=""></ion-input>
     <ion-input label="password" formControlName="password" label-placement="floating" fill="outline" placeholder="" type="password"></ion-input>
-    <ion-datetime locale="eu-EU" formControlName="birthdate" ></ion-datetime>
+    <ion-datetime-button datetime="datetime"></ion-datetime-button>    
+    <ion-modal [keepContentsMounted]="true">
+    <ng-template >
+        <ion-datetime presentation="date" formControlName="birthdate" id="datetime"></ion-datetime>
+    </ng-template>
+    </ion-modal>
     <ion-checkbox>I have read and agree to the <a href="" >terms and conditions</a></ion-checkbox>
     <ion-button type="submit" expand="block">Signup</ion-button>
   </form>
