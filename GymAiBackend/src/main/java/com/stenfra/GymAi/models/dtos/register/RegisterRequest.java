@@ -6,10 +6,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.stenfra.GymAi.models.entities.Role;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -46,6 +43,7 @@ public class RegisterRequest {
     @JsonDeserialize(using = RoleDeserializer.class)
     private Role role;
 
+    @Past(message = "birthdate must be in the past")
     private LocalDate birthdate;
 
     static class RoleDeserializer extends JsonDeserializer<Role> {

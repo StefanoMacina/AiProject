@@ -45,6 +45,7 @@ public class AuthService {
         User user = new User(
                 registerRequest.getFirstname(),
                 registerRequest.getLastname(),
+                registerRequest.getUsername(),
                 registerRequest.getEmail(),
                 registerRequest.getBirthdate(),
                 encoder.encode(registerRequest.getPassword()),

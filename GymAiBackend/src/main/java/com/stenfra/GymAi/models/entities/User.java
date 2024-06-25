@@ -73,13 +73,18 @@ public class User implements UserDetails {
         return true;
     }
 
-    public User(String firstname, String lastname, String email,
+    public User(String firstname, String lastname, String username ,String email,
                 LocalDate birthdate, String passwd, Role role) {
         this.firstname = firstname;
         this.lastname = lastname;
+        this.username = username;
         this.email = email;
         this.birthdate = birthdate;
-        this.age = Period.between(birthdate, LocalDate.now()).getYears();
+        if(this.birthdate != null){
+            this.age = Period.between(birthdate, LocalDate.now()).getYears();
+        } else {
+            this.age = null;
+        }
         this.passwd = passwd;
         this.role = role;
     }
