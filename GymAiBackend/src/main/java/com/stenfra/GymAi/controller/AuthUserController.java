@@ -3,6 +3,7 @@ package com.stenfra.GymAi.controller;
 import com.stenfra.GymAi.Exceptions.InvalidRoleException;
 import com.stenfra.GymAi.models.dtos.login.LoginRequest;
 import com.stenfra.GymAi.models.dtos.login.LoginResponse;
+import com.stenfra.GymAi.models.dtos.messages.MessageResponse;
 import com.stenfra.GymAi.models.dtos.register.RegisterRequest;
 import com.stenfra.GymAi.models.dtos.register.UserDto;
 import com.stenfra.GymAi.models.entities.User;
@@ -56,10 +57,10 @@ public class AuthUserController {
                     .role(registerRequest.getRole())
                     .build();
             return new ResponseEntity<>(resp, HttpStatus.CREATED);
-        } catch (UserAlreadyExistsEx e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        } catch (UserAlreadyExistsEx e) {;
+            return new ResponseEntity<>(new MessageResponse(e.getMessage()) , HttpStatus.CONFLICT);
         } catch (InvalidRoleException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(new MessageResponse(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);
         }
     }
 
@@ -71,7 +72,7 @@ public class AuthUserController {
             LoginResponse loginResponse = authService.signIn(loginRequest);
             return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, loginResponse.getToken().toString()).body(loginResponse);
         } catch (BadCredentialsException | UsernameNotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new MessageResponse(e.getMessage()), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -81,7 +82,7 @@ public class AuthUserController {
         User user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow(() -> new UsernameNotFoundException(""));
         ResponseCookie cookie = jwtService.getCleanJwtCookie();
         SecurityContextHolder.clearContext();
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).body("you've been signed out successfully %s %s !".formatted(user.getFirstname(), user.getLastname()));
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).body(new MessageResponse("you've been signed out successfully %s %s !".formatted(user.getFirstname(), user.getLastname())));
     }
 
 }
