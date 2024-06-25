@@ -24,6 +24,11 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler({UserAlreadyExistsEx.class})
+    public ResponseEntity<MessageResponse> handleUserAlreadyExistException(UserAlreadyExistsEx ex){
+        return new ResponseEntity<>(new MessageResponse(ex.getMessage()),HttpStatus.CONFLICT);
+    }
+
 //    @ExceptionHandler(MethodArgumentNotValidException.class)
 //    public ResponseEntity<Map<String, List<String>>> handleValidationErrors(MethodArgumentNotValidException ex) {
 //        List<String> errors = ex.getBindingResult().getFieldErrors()
