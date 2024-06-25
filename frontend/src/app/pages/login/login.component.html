@@ -1,9 +1,12 @@
 <div class="login-card">
 
-    <div class="card-title">
+    <div >
         <h1>Login</h1>
-        <span>You don't have an account? <a routerLink="/signup">Sign up</a></span>
     </div>
-    
-
+    <form class="form-group" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <ion-input label="username" formControlName="username" label-placement="floating" fill="outline" placeholder=""></ion-input>
+        <ion-input label="password" formControlName="password" label-placement="floating" fill="outline" placeholder="" type="password"></ion-input>
+        <ion-button type="submit" expand="block" >login</ion-button>
+    </form>
+    <span>You don't have an account? <a routerLink="/signup">Sign up</a></span>
 </div>
