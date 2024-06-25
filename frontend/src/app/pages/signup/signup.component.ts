@@ -5,7 +5,7 @@ import { IonButton, IonCheckbox, IonContent, IonDatetime, IonDatetimeButton, Ion
 
 import { IonInput } from '@ionic/angular/standalone';
 import { AuthService } from 'src/app/auth/auth.service';
-import { User } from 'src/app/models/user.interface';
+import { Role, User } from 'src/app/models/user.interface';
 
 @Component({
   selector: 'app-signup',
@@ -37,7 +37,7 @@ export class SignupComponent  implements OnInit {
   onSubmit(){
     console.log(this.signupForm.value)
     if(this.signupForm.valid){
-      console.log(this.signupForm.value.value)
+      console.log("successs")
       const data : User = {
         ...this.signupForm.value,
         role: 'USER'
