@@ -13,8 +13,8 @@ export class AuthService {
 
   constructor() { }
 
-  signUp(data : User) : Observable<User> {
-    return this.HttpClient.post<User>(`${this.baseUrl}/signup`, data);
+  signUp(data : User)  {
+    return this.HttpClient.post(`${this.baseUrl}/signup`, data);
   }
 
 

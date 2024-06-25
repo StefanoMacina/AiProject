@@ -1,14 +1,20 @@
 export interface User{
     firstname : String,
     lastname : String,
-    usernmae : String,
+    username : String,
     email : String,
     password : String,
     role? : Role,
-    birthDate? : Date
+    birthDate? : Date,
+    gender : Gender
 }
 
 export enum Role{
     USER,
     ADMIN
+}
+
+export enum Gender{
+    MALE,
+    FEMALE
 }
