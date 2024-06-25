@@ -1,10 +1,9 @@
 package com.stenfra.GymAi.models.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,16 +26,37 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String firstname, lastname, email, username;
+    @NotBlank(message = "Il campo 'firstname' non può essere vuoto")
+    @NotNull(message = "Il campo 'firstname' è obbligatorio")
+    private String firstname;
+
+    @NotBlank(message = "Il campo 'lastname' non può essere vuoto")
+    @NotNull(message = "Il campo 'lastname' è obbligatorio")
+    private String lastname;
+
+    @NotBlank(message = "Il campo 'email' non può essere vuoto")
+    @NotNull(message = "Il campo 'email' è obbligatorio")
+    private String email;
+
+    @NotBlank(message = "Il campo 'username' non può essere vuoto")
+    @NotNull(message = "Il campo 'username' è obbligatorio")
+    private String username;
 
     private LocalDate birthdate;
-
     private Integer age;
 
+    @NotBlank(message = "Il campo 'passwd' non può essere vuoto")
+    @NotNull(message = "Il campo 'passwd' è obbligatorio")
     private String passwd;
 
+    @NotNull(message = "Il campo 'gender' è obbligatorio")
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    @NotNull(message = "Il campo 'role' è obbligatorio")
     @Enumerated(EnumType.STRING)
     private Role role;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -74,7 +94,7 @@ public class User implements UserDetails {
     }
 
     public User(String firstname, String lastname, String username ,String email,
-                LocalDate birthdate, String passwd, Role role) {
+                LocalDate birthdate, String passwd, Role role, Gender gender) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.username = username;
@@ -87,6 +107,7 @@ public class User implements UserDetails {
         }
         this.passwd = passwd;
         this.role = role;
+        this.gender=gender;
     }
 }
 

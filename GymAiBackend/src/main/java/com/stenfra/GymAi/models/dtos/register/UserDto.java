@@ -1,5 +1,6 @@
 package com.stenfra.GymAi.models.dtos.register;
 
+import com.stenfra.GymAi.models.entities.Gender;
 import com.stenfra.GymAi.models.entities.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,4 +14,5 @@ import lombok.NoArgsConstructor;
 public class UserDto {
     private String firstname, lastname, username, email;
     private Role role;
+    private Gender gender;
 }

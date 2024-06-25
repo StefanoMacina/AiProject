@@ -1,6 +1,5 @@
 package com.stenfra.GymAi.controller;
 
-import com.stenfra.GymAi.Exceptions.InvalidRoleException;
 import com.stenfra.GymAi.models.dtos.login.LoginRequest;
 import com.stenfra.GymAi.models.dtos.login.LoginResponse;
 import com.stenfra.GymAi.models.dtos.messages.MessageResponse;
@@ -24,8 +23,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -43,25 +40,18 @@ public class AuthUserController {
     @PostMapping("/signup")
     public ResponseEntity<?> register(
             @Valid @RequestBody RegisterRequest registerRequest, BindingResult bindingResult
-    ) {
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body("");
-        }
-        try {
-            authService.signUp(registerRequest);
-            UserDto resp = UserDto.builder()
-                    .firstname(registerRequest.getFirstname())
-                    .lastname(registerRequest.getLastname())
-                    .email(registerRequest.getEmail())
-                    .username(registerRequest.getUsername())
-                    .role(registerRequest.getRole())
-                    .build();
+    ) throws UserAlreadyExistsEx {
+
+        authService.signUp(registerRequest);
+            UserDto resp = new UserDto(
+                    registerRequest.getFirstname(),
+                    registerRequest.getLastname(),
+                    registerRequest.getUsername(),
+                    registerRequest.getEmail(),
+                    registerRequest.getRole(),
+                    registerRequest.getGender()
+            );
             return new ResponseEntity<>(resp, HttpStatus.CREATED);
-        } catch (UserAlreadyExistsEx e) {;
-            return new ResponseEntity<>(new MessageResponse(e.getMessage()) , HttpStatus.CONFLICT);
-        } catch (InvalidRoleException e) {
-            return new ResponseEntity<>(new MessageResponse(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);
-        }
     }
 
     @PostMapping("/signin")
@@ -82,7 +72,8 @@ public class AuthUserController {
         User user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow(() -> new UsernameNotFoundException(""));
         ResponseCookie cookie = jwtService.getCleanJwtCookie();
         SecurityContextHolder.clearContext();
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString()).body(new MessageResponse("you've been signed out successfully %s %s !".formatted(user.getFirstname(), user.getLastname())));
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE,
+                cookie.toString()).body(new MessageResponse("you've been signed out %s %s".formatted(user.getFirstname(), user.getLastname())));
     }
 
 }

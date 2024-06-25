@@ -1,15 +1,17 @@
 package com.stenfra.GymAi.service;
 
-import com.stenfra.GymAi.Exceptions.InvalidRoleException;
 import com.stenfra.GymAi.models.dtos.login.LoginRequest;
 import com.stenfra.GymAi.models.dtos.login.LoginResponse;
 import com.stenfra.GymAi.models.dtos.register.RegisterRequest;
 import com.stenfra.GymAi.models.dtos.register.UserDto;
+import com.stenfra.GymAi.models.entities.Gender;
 import com.stenfra.GymAi.models.entities.Role;
 import com.stenfra.GymAi.models.entities.User;
 import com.stenfra.GymAi.repositories.UserRepository;
 import com.stenfra.GymAi.securityConfig.JwtService;
 import com.stenfra.GymAi.Exceptions.UserAlreadyExistsEx;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,9 +24,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.management.relation.InvalidRoleValueException;
 import java.util.EnumSet;
-import java.util.Objects;
 
 @Service
 public class AuthService {
@@ -41,6 +41,7 @@ public class AuthService {
     @Autowired
     JwtService jwtService;
 
+    @Transactional
     public void signUp(RegisterRequest registerRequest) throws UserAlreadyExistsEx {
         User user = new User(
                 registerRequest.getFirstname(),
@@ -49,7 +50,8 @@ public class AuthService {
                 registerRequest.getEmail(),
                 registerRequest.getBirthdate(),
                 encoder.encode(registerRequest.getPassword()),
-                registerRequest.getRole()
+                registerRequest.getRole(),
+                registerRequest.getGender()
         );
 
         if(userRepository.existsByUsername(user.getUsername())){
@@ -58,10 +60,6 @@ public class AuthService {
 
         if(userRepository.existsByEmail(user.getEmail())){
             throw new UserAlreadyExistsEx("email %s already exists".formatted(user.getEmail()));
-        }
-
-        if (!EnumSet.of(Role.ROLE_ADMIN, Role.ROLE_USER).contains(user.getRole())) {
-            throw new InvalidRoleException("User role '%s' is not valid".formatted(registerRequest.getRole()));
         }
 
         userRepository.save(user);
