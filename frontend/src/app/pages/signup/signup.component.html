@@ -1,18 +1,16 @@
 <div class="signup-card">
   <div class="card-title">
       <h1>Create Account</h1>
-      <span>Already have an account? <a routerLink="/login">Sign In</a></span>
   </div>
   <form class="form-group" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-      <input type="text" name="firstname" placeholder="Firstname" formControlName="firstname">
-      <input type="text" name="lastname" placeholder="lastname" formControlName="lastname">
-      <input type="text" name="username" placeholder="username" formControlName="username">
-      <input type="email" name="email" placeholder="Email" formControlName="email">
-      <input type="password" name="password" placeholder="Password" formControlName="password">
-      <input type="date" name="birthdate" placeholder="birthdate" formControlName="birthdate">
-      <input type="submit" value="Signup">
+    <ion-input label="firstname" formControlName="firstname" label-placement="floating" fill="outline" placeholder=""></ion-input>
+    <ion-input label="lastname" formControlName="lastname" label-placement="floating" fill="outline" placeholder=""></ion-input>
+    <ion-input label="username" formControlName="username" label-placement="floating" fill="outline" placeholder=""></ion-input>
+    <ion-input label="email" formControlName="email" label-placement="floating" fill="outline" placeholder=""></ion-input>
+    <ion-input label="password" formControlName="password" label-placement="floating" fill="outline" placeholder="" type="password"></ion-input>
+    <ion-datetime locale="eu-EU" formControlName="birthdate" ></ion-datetime>
+    <ion-checkbox>I have read and agree to the <a href="" >terms and conditions</a></ion-checkbox>
+    <ion-button type="submit" expand="block">Signup</ion-button>
   </form>
-  <div class="card-terms">
-      <input type="checkbox"> <span>I have read and agree to the <a href="">Terms of Service</a></span>
-  </div>
+  <span>Already have an account? <a routerLink="/login">Sign In</a></span>
 </div>

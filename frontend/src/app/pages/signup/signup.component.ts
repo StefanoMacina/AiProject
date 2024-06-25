@@ -1,13 +1,16 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { IonButton, IonCheckbox, IonDatetime } from '@ionic/angular/standalone';
+
+import { IonInput } from '@ionic/angular/standalone';
 import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/models/user.interface';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports : [ReactiveFormsModule, RouterModule],
+  imports : [ReactiveFormsModule, RouterModule, IonInput, IonDatetime, IonButton, IonCheckbox],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
 })
