@@ -3,7 +3,8 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { AuthService } from 'src/app/auth/auth.service';
-import { User } from 'src/app/models/user.interface';
+import { RegistrationRequest } from 'src/app/models/user.interface';
+
 
 @Component({
   selector: 'app-signup',
@@ -36,7 +37,7 @@ export class SignupComponent  implements OnInit {
     console.log(this.signupForm.value)
     if(this.signupForm.valid){
       console.log("successs")
-      const data : User = {
+      const data : RegistrationRequest = {
         ...this.signupForm.value,
         role: 'USER'
       }

@@ -2,6 +2,8 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { AuthService } from 'src/app/auth/auth.service';
+import { LoginRequest } from 'src/app/models/user.interface';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +14,8 @@ import { IonicModule } from '@ionic/angular';
 })
 export class LoginComponent  implements OnInit {
 
-  router=inject(Router);
+  $router=inject(Router);
+  $authService=inject(AuthService)
 
   loginForm : FormGroup;
   
@@ -24,7 +27,15 @@ export class LoginComponent  implements OnInit {
    }
 
   onSubmit(){
-    console.log(this.loginForm.value);
+    const data = this.loginForm;
+    if(data.valid){
+      this.$authService.signin(data.value)
+      .subscribe({
+        next : () => this.$router.navigate(['/home']),
+        error : (err) => console.log(err)
+      });
+      
+    } 
   }
 
   ngOnInit() {}

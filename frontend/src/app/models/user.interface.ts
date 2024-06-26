@@ -1,4 +1,4 @@
-export interface User{
+export interface RegistrationRequest{
     firstname : String,
     lastname : String,
     username : String,
@@ -17,4 +17,9 @@ export enum Role{
 export enum Gender{
     MALE,
     FEMALE
+}
+
+export interface LoginRequest{
+    username : String,
+    password : String
 }

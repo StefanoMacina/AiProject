@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../models/user.interface';
+import { LoginRequest, RegistrationRequest } from '../models/user.interface';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -8,13 +8,18 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
 
-  HttpClient = inject(HttpClient);
+  http = inject(HttpClient);
   baseUrl = "http://localhost:8080/api/v1/auth";
 
   constructor() { }
 
-  signUp(data : User)  {
-    return this.HttpClient.post(`${this.baseUrl}/signup`, data);
+  signUp(data : RegistrationRequest) : Observable<any>  {
+    return this.http.post<RegistrationRequest>(`${this.baseUrl}/signup`, data);
+  }
+
+  signin(data: LoginRequest ){
+    return this.http.post<LoginRequest>(`${this.baseUrl}/signin`, data)
+           
   }
 
 
