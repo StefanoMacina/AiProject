@@ -23,7 +23,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:8100", maxAge = 3600)
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthUserController {

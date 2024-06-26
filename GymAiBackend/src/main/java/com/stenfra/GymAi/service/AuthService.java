@@ -72,6 +72,7 @@ public class AuthService {
         User existingUser = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("user %s does not exists".formatted(username)));
 
+        // TO-DO : handle this exception in global exception handler
         if(!encoder.matches(password, existingUser.getPassword())){
             throw new BadCredentialsException("incorrect password for user %s".formatted(username));
         }

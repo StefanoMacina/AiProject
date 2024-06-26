@@ -18,11 +18,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @EnableWebSecurity
 @Configuration
 @EnableMethodSecurity
-public class WebSecurityConfig {
+public class WebSecurityConfig implements WebMvcConfigurer {
 
     @Autowired
     AuthenticationProvider authenticationProvider;
@@ -39,7 +41,7 @@ public class WebSecurityConfig {
         http.authorizeHttpRequests( auth -> auth.requestMatchers("/api/v1/auth/**")
                 .permitAll()
                 .anyRequest()
-                .permitAll());
+                .authenticated());
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.authenticationProvider(authenticationProvider);
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
@@ -47,4 +49,14 @@ public class WebSecurityConfig {
         return http.build();
     }
 
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/v1/auth/**")
+                .allowedOriginPatterns("*")
+                .allowedMethods("GET", "POST", "OPTIONS", "PUT", "DELETE")
+                .allowedHeaders("Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers", "Access-Control-Allow-Origin")
+                .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials")
+                .allowCredentials(true);
+    }
 }
