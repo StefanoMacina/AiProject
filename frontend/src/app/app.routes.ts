@@ -3,6 +3,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { AdminComponent } from './pages/admin/admin.component';
 import { roleGuard } from './auth/guardians/role.guard';
+import { authGuard } from './auth/guardians/auth.guard';
 
 export const routes: Routes = [
   {
@@ -21,7 +22,7 @@ export const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./tabs/tabs.routes').then(m => m.routes),
-    canActivate : [roleGuard]
+    canActivate : [authGuard]
     
   }
 ];

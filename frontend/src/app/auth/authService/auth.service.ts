@@ -26,7 +26,7 @@ export class AuthService {
   }
 
   hasAccess(){
-    return this.http.get(`${this.baseUrl}/hasaccess`)
+    return this.http.get(`${this.baseUrl}/check-auth`)
   }
 
 }

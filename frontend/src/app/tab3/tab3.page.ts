@@ -5,6 +5,7 @@ import { UserService } from '../services/service.service';
 import { UserDto } from '../models/user.interface';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../auth/authService/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab3',
@@ -17,6 +18,7 @@ export class Tab3Page {
 
   $authService=inject(AuthService);
   $service=inject(UserService);
+  $router=inject(Router);
   user! : UserDto;
 
   ngOnInit(): void {
@@ -30,7 +32,10 @@ export class Tab3Page {
   }
 
   logout(){
-    this.$authService.logout().subscribe(() => {});
+    this.$authService.logout().subscribe(() => {
+      
+    });
+    this.$router.navigate(['/login'])
   }
 
   constructor() {}
