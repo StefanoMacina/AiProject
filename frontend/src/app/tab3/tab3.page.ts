@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 import {IonicModule} from '@ionic/angular'
-import { AuthService } from '../auth/auth.service';
 import { UserService } from '../services/service.service';
 import { UserDto } from '../models/user.interface';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../auth/authService/auth.service';
 
 @Component({
   selector: 'app-tab3',

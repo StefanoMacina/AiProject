@@ -6,8 +6,8 @@ import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalo
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { environment } from './environments/environment';
-import { provideHttpClient, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
-import { authenticationInterceptor } from './app/auth/http-request-interceptor.interceptor.spec';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { authenticationInterceptor } from './app/auth/interceptor/http-request-interceptor.interceptor.spec';
 
 if (environment.production) {
   enableProdMode();
