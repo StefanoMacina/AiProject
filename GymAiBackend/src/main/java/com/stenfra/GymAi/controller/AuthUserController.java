@@ -75,5 +75,10 @@ public class AuthUserController {
                 cookie.toString()).body(new MessageResponse("you've been signed out %s %s".formatted(user.getFirstname(), user.getLastname())));
     }
 
+    @GetMapping("/hasaccess")
+    public Boolean hasAccess(){
+        ResponseCookie cookie = jwtService.validateJwtToken()
+    }
+
 
 }
