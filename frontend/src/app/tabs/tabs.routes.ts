@@ -1,7 +1,5 @@
 import { Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
-import { audit } from 'rxjs';
-import { authGuard } from '../auth/auth.guard';
 
 export const routes: Routes = [
   {
@@ -26,7 +24,7 @@ export const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/home/tab1',
+        redirectTo: '/home/tab3',
         pathMatch: 'full',
       },
     ],

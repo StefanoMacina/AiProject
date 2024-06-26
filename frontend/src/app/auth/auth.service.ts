@@ -19,11 +19,10 @@ export class AuthService {
 
   signin(data: LoginRequest ){
     return this.http.post<LoginRequest>(`${this.baseUrl}/signin`, data)
-           
   }
 
-
-
-
+  logout(){
+    return this.http.post(`${this.baseUrl}/signout`,null);
+  }
 
 }

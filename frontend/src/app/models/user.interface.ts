@@ -9,6 +9,15 @@ export interface RegistrationRequest{
     gender : Gender
 }
 
+export interface UserDto{
+    firstname : String,
+    lastname : String,
+    username : String,
+    Role : Role,
+    email : String,
+    gender : Gender
+}
+
 export enum Role{
     USER,
     ADMIN
