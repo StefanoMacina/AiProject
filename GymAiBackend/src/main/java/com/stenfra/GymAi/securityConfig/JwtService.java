@@ -45,7 +45,8 @@ public class JwtService {
     }
 
     public ResponseCookie getCleanJwtCookie() {
-        return ResponseCookie.from(jwtCookie, null).path("/").build();
+        return ResponseCookie.from(jwtCookie).path("/")
+                .maxAge(0).build();
     }
 
     public String getUserNameFromJwtToken(String token) {

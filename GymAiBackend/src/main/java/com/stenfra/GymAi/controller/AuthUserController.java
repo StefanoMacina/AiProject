@@ -16,11 +16,16 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:8100", maxAge = 3600)
 @RestController
@@ -75,9 +80,13 @@ public class AuthUserController {
                 cookie.toString()).body(new MessageResponse("you've been signed out %s %s".formatted(user.getFirstname(), user.getLastname())));
     }
 
-    @GetMapping("/hasaccess")
-    public Boolean hasAccess(){
-        ResponseCookie cookie = jwtService.validateJwtToken()
+    @GetMapping("/check-auth")
+    public ResponseEntity<Map<String, Boolean>> checkAuth() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        boolean isAuthenticated = authentication.isAuthenticated() && !(authentication instanceof AnonymousAuthenticationToken);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("isAuthenticated", isAuthenticated);
+        return ResponseEntity.ok(response);
     }
 
 
