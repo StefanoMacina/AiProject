@@ -1,15 +1,18 @@
 import { Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
+import { audit } from 'rxjs';
+import { authGuard } from '../auth/auth.guard';
 
 export const routes: Routes = [
   {
-    path: 'tabs',
+    path: 'home',
     component: TabsPage,
     children: [
       {
         path: 'tab1',
         loadComponent: () =>
           import('../tab1/tab1.page').then((m) => m.Tab1Page),
+        
       },
       {
         path: 'tab2',
@@ -23,14 +26,9 @@ export const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/tabs/tab1',
+        redirectTo: '/home/tab1',
         pathMatch: 'full',
       },
     ],
-  },
-  {
-    path: '',
-    redirectTo: '/tabs/tab1',
-    pathMatch: 'full',
-  },
+  }
 ];
