@@ -25,7 +25,6 @@ export class Tab3Page {
     this.$service.getUserInfo().subscribe(
       data => {
         this.user = data
-        //console.log(data)
       },
       error => console.error("failed to fetch user info")
     ) 
